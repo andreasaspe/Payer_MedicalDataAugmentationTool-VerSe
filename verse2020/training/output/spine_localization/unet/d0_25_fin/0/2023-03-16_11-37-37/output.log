@@ -1,0 +1,12 @@
+Backend MacOSX is interactive backend. Turning interactive mode on.
+loaded 76 ids
+loaded 76 ids
+loaded 37 ids
+loaded 37 ids
+Starting main loop
+Training parameters:
+Optimizer:  <keras.mixed_precision.loss_scale_optimizer.LossScaleOptimizerV3 object at 0x7fa99ba27790>
+Batch size: 1
+Learning rate: <keras.optimizers.schedules.learning_rate_schedule.ExponentialDecay object at 0x7fa99ba273d0>
+Max iterations: 10000
+Output folder: ./output/spine_localization/unet/d0_25_fin/0/2023-03-16_11-37-37

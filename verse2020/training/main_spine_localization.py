@@ -14,7 +14,7 @@ from dataset import Dataset
 from datasets.pyro_dataset import PyroClientDataset
 from network import Unet
 from spine_localization_postprocessing import bb, bb_iou
-from tensorflow.keras.mixed_precision import experimental as mixed_precision
+from tensorflow.keras import mixed_precision
 from tensorflow_train_v2.dataset.dataset_iterator import DatasetIterator
 from tensorflow_train_v2.train_loop import MainLoopBase
 from tensorflow_train_v2.utils.data_format import get_batch_channel_image_size
@@ -31,10 +31,10 @@ class MainLoop(MainLoopBase):
         :param config: config dictionary
         """
         super().__init__()
-        self.use_mixed_precision = True
+        self.use_mixed_precision = False #MIG: Den her var True før men tror det fuckede mig lidt op.
         if self.use_mixed_precision:
             policy = mixed_precision.Policy('mixed_float16')
-            mixed_precision.set_policy(policy)
+            mixed_precision.set_global_policy(policy)
         self.cv = cv
         self.config = config
         self.batch_size = 1
@@ -58,10 +58,10 @@ class MainLoop(MainLoopBase):
             self.network = Unet
         self.clip_gradient_global_norm = 100000.0
 
-        self.use_pyro_dataset = True
+        self.use_pyro_dataset = False #MIG: Satte det her til False
         self.save_output_images = True
-        self.save_debug_images = False
-        self.has_validation_groundtruth = cv in [0, 1, 2]
+        self.save_debug_images = True
+        self.has_validation_groundtruth = 0#cv in [0, 1, 2]
         self.local_base_folder = '../verse2020_dataset'
         self.image_size = [None, None, None]
         self.image_spacing = [config.spacing] * 3
@@ -71,7 +71,7 @@ class MainLoop(MainLoopBase):
         self.base_output_folder = './output/spine_localization/'
         self.additional_output_folder_info = config.info
 
-        self.call_model_and_loss = tf.function(self.call_model_and_loss,
+        self.call_model_and_loss = tf.function(self.call_model_and_lossNOW,
                                                input_signature=[tf.TensorSpec(tf.TensorShape([1, 1] + list(reversed(self.image_size))), tf.float16 if self.use_mixed_precision else tf.float32),
                                                                 tf.TensorSpec(tf.TensorShape([1, 1] + list(reversed(self.image_size))), tf.float32),
                                                                 tf.TensorSpec(tf.TensorShape(None), tf.bool)])
@@ -90,8 +90,7 @@ class MainLoop(MainLoopBase):
         self.learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(self.learning_rate, self.max_iter, 0.1)
         self.optimizer = tf.keras.optimizers.Adam(learning_rate=self.learning_rate)
         if self.use_mixed_precision:
-            self.optimizer = mixed_precision.LossScaleOptimizer(self.optimizer,
-                                                                loss_scale=tf.mixed_precision.experimental.DynamicLossScale(initial_loss_scale=2 ** 15, increment_period=1000))
+            self.optimizer = mixed_precision.LossScaleOptimizer(self.optimizer) #MIG: Add more arguments here?
 
     def init_checkpoint(self):
         """
@@ -187,7 +186,7 @@ class MainLoop(MainLoopBase):
             diff = pred - target
         return tf.nn.l2_loss(diff) / tf.cast(batch_size * 1024, tf.float32) #* channel_size * np.prod(image_size))
 
-    def call_model_and_loss(self, image, target_heatmap, training):
+    def call_model_and_lossNOW(self, image, target_heatmap, training):
         """
         Call model and loss.
         :param image: The image to call the model with.
@@ -200,14 +199,14 @@ class MainLoop(MainLoopBase):
         losses['loss_net'] = self.loss_function(target=target_heatmap, pred=prediction)
         return prediction, losses
 
-    @tf.function
-    def train_step(self):
+    #@tf.function
+    def train_stepNOW(self):
         """
         Perform a training step.
         """
         image, target_landmarks, image_id = self.dataset_train_iter.get_next()
         with tf.GradientTape() as tape:
-            _, losses = self.call_model_and_loss(image, target_landmarks, training=True)
+            _, losses = self.call_model_and_lossNOW(image, target_landmarks, training=True) #Fjern evt. alt now
             if self.reg_constant > 0:
                 losses['loss_reg'] = self.reg_constant * tf.reduce_sum(self.model.losses)
             loss = tf.reduce_sum(list(losses.values()))

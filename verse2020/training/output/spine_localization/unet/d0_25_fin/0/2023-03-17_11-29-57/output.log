@@ -1,0 +1,111 @@
+loaded 4 ids
+loaded 4 ids
+loaded 37 ids
+loaded 37 ids
+Starting main loop
+Training parameters:
+Optimizer:  <keras.optimizers.optimizer_experimental.adam.Adam object at 0x7fb0ee343b20>
+Batch size: 1
+Learning rate: <keras.optimizers.schedules.learning_rate_schedule.ExponentialDecay object at 0x7fb0ee343340>
+Max iterations: 10000
+Output folder: ./output/spine_localization/unet/d0_25_fin/0/2023-03-17_11-29-57
+Model: "unet"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ unet_avg_linear3d (UnetAvgL  multiple                 5727648   
+ inear3D)                                                        
+                                                                 
+ sequential (Sequential)     multiple                  97        
+                                                                 
+=================================================================
+Total params: 5,727,745
+Trainable params: 5,727,745
+Non-trainable params: 0
+_________________________________________________________________
+Model: "unet"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ unet_avg_linear3d (UnetAvgL  multiple                 5727648   
+ inear3D)                                                        
+                                                                 
+ sequential (Sequential)     multiple                  97        
+                                                                 
+=================================================================
+Total params: 5,727,745
+Trainable params: 5,727,745
+Non-trainable params: 0
+_________________________________________________________________
+Model: "unet"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ unet_avg_linear3d (UnetAvgL  multiple                 5727648   
+ inear3D)                                                        
+                                                                 
+ sequential (Sequential)     multiple                  97        
+                                                                 
+=================================================================
+Total params: 5,727,745
+Trainable params: 5,727,745
+Non-trainable params: 0
+_________________________________________________________________
+Model: "unet"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ unet_avg_linear3d (UnetAvgL  multiple                 5727648   
+ inear3D)                                                        
+                                                                 
+ sequential (Sequential)     multiple                  97        
+                                                                 
+=================================================================
+Total params: 5,727,745
+Trainable params: 5,727,745
+Non-trainable params: 0
+_________________________________________________________________
+Model: "unet"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ unet_avg_linear3d (UnetAvgL  multiple                 5727648   
+ inear3D)                                                        
+                                                                 
+ sequential (Sequential)     multiple                  97        
+                                                                 
+=================================================================
+Total params: 5,727,745
+Trainable params: 5,727,745
+Non-trainable params: 0
+_________________________________________________________________
+None
+Model: "unet"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ unet_avg_linear3d (UnetAvgL  multiple                 5727648   
+ inear3D)                                                        
+                                                                 
+ sequential (Sequential)     multiple                  97        
+                                                                 
+=================================================================
+Total params: 5,727,745
+Trainable params: 5,727,745
+Non-trainable params: 0
+_________________________________________________________________
+None
+Model: "unet"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ unet_avg_linear3d (UnetAvgL  multiple                 5727648   
+ inear3D)                                                        
+                                                                 
+ sequential (Sequential)     multiple                  97        
+                                                                 
+=================================================================
+Total params: 5,727,745
+Trainable params: 5,727,745
+Non-trainable params: 0
+_________________________________________________________________
